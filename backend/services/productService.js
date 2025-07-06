@@ -1,16 +1,17 @@
 import Product from "../models/Product.js";
 
 export const createProductService = async (data) => {
+  if (!data.unit) data.unit = "kg"; // Default to kg
   const product = new Product(data);
   return await product.save();
 };
 
 export const getProductsService = async () => {
-  return await Product.find();
+  return await Product.find().populate("Purchase");
 };
 
 export const getProductByIdService = async (id) => {
-  return await Product.findById(id);
+  return await Product.findById(id).populate("Purchase");
 };
 
 export const updateProductService = async (id, data) => {
